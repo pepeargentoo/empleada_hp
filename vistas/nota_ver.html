@@ -13,6 +13,8 @@
   <script src="../js/popper.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script src="../js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
    .header {
     padding: 10px;
@@ -73,16 +75,14 @@
        <div class="icon d-flex align-items-center justify-content-center">
         <span class="fa fa-user-o"></span>
        </div>
-       
        <div class="form-group row">
         <div class="col-md-1">
             <a href="tareas_list.html"><i class="fa fa-backward" aria-hidden="true"></i></a>
         </div>
         <div class="col-md-11">
-            <h3 class="text-center mb-4">Nota Nueva</h3>
+            <h3 class="text-center mb-4">Detalle Nueva</h3>
         </div>
        </div>
-
 
        <form id="login" class="login-form">
         <div class="form-group">
@@ -109,9 +109,12 @@
           <textarea id="descripcion" class="form-control rounded-left" placeholder="Descripcion"></textarea>
          </div>
         </div>
-
-        <div class="form-group">
-            <a href="tareas_list.html" class="btn btn-primary rounded submit p-3 px-5">CREAR</a>
+        <br clear="all" />
+        <div class="form-group d-flex">
+         <a href="tareas_list.html" class="btn btn-primary rounded col-md-12">GUARDAR</a>
+        </div>
+        <div class="form-group d-flex">
+         <a onclick="borrar()" class="btn btn-danger rounded col-md-12">BORRAR</a>
         </div>
        </form>
       </div>
@@ -119,5 +122,24 @@
     </div>
    </div>
   </section>
+  <script>
+   function borrar() {
+    Swal.fire({
+     title: "Borrar",
+     text: "¡No podrás revertir esto!",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Borrar",
+     cancelButtonText: "Cancelar",
+    }).then((result) => {
+     if (result.isConfirmed) {
+      Swal.fire("Borrado!", "La nota fue borrada con éxito", "success");
+      window.location.href = "tareas_list.html";
+     }
+    });
+   }
+  </script>
  </body>
 </html>
