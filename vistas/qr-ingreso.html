@@ -1,59 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>Empleada</title>
-    <meta charset="utf-8">
-   
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <head>
+  <title>Empleada</title>
+  <meta charset="utf-8" />
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../css/style.css">
-    <script src="../js/jquery.min.js"></script>
-  	<script src="../js/popper.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/main.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
-    <script src="../js/html5-qrcode.min.js"></script>
-  
-    
-</head>
-	<body>
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-5">
-					<div class="login-wrap p-4 p-md-5">
-		      	<div class="icon d-flex align-items-center justify-content-center">
-		      		<span class="fa fa-user-o"></span>
-		      	</div>
-		      	<h3 class="text-center mb-4">IngresarTEST</h3>
-				<div class="col-md-12">
-          <div style="width: 500px" id="reader"></div>
-                    <div id="scanned-result"></div>
-                </div>
-                
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-	        </div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<script>
-    function onScanSuccess(decodedText, decodedResult) {
-    // Handle on success condition with the decoded text or result.
-    console.log(`Scan result: ${decodedText}`, decodedResult);
-}
-
-function onScanError(errorMessage) {
-    // handle on error condition, with error message
-    console.log('cancel error')
-}
-
-var html5QrcodeScanner = new Html5QrcodeScanner(
-    "reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess, onScanError);
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/popper.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/main.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" />
+  <script src="../js/html5-qrcode.min.js"></script>
+ </head>
+ <body>
+  <section class="ftco-section">
+   <div class="container">
+    <div class="row justify-content-center">
+     <div class="col-md-6 col-lg-5">
+      <div class="login-wrap p-4 p-md-5">
+       <div class="icon d-flex align-items-center justify-content-center">
+        <span class="fa fa-user-o"></span>
+       </div>
+       <h3 class="text-center mb-4">INGRSAR</h3>
+       <div class="col-md-12">
+        <div id="reader"></div>
+        <div id="scanned-result"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script>
+   function onScanSuccess(decodedText, decodedResult) {
+      window.location.href = "vistas/tareas_list.html";
+   }
+   var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+   html5QrcodeScanner.render(onScanSuccess);
   </script>
-    
-</body>
-</html>   
+ </body>
+</html>
