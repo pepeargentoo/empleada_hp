@@ -35,12 +35,12 @@
    .ftco-section-costome {
     padding: 3em 0;
    }
-   
+
    .section-midd {
     width: 50%;
     font-weight: bold;
    }
-  
+
    .ul-coustome {
     margin-top: 30px;
     list-style: none;
@@ -62,7 +62,7 @@
   <section class="header">
    <div class="icon d-flex align-items-center justify-content-center">
     <h2>IconApp</h2>
-    <a href="../index.html"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+    <a id="salir"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
    </div>
   </section>
   <section class="ftco-section-costome">
@@ -73,34 +73,16 @@
        <div class="row">
         <ul class="nav nav-tabs" role="tablist" style="width: 100%;">
          <li class="nav-item section-midd">
-          <a class="nav-link active" data-toggle="tab" href="#tareas" role="tab">TAREAS</a>
+          <a class="nav-link active" data-toggle="tab" href="#tareas" role="tab" id="tarea_list">TAREAS</a>
          </li>
          <li class="nav-item section-midd">
-          <a class="nav-link" data-toggle="tab" href="#notas" role="tab">NOTAS</a>
+          <a class="nav-link" data-toggle="tab" href="#notas" role="tab" id="notas_list">NOTAS</a>
          </li>
         </ul>
         <div class="tab-content" style="width: 100%;">
-         <div class="tab-pane active" id="tareas" role="tabpanel">
-          <ul class="ul-coustome">
-           <li><a href="ver_tarea.html" style="color: gray;">Dar medicamento 1 12:30</a></li>
-           <li><a href="ver_tarea.html" style="color: gray;">Dar medicamento 1 12:30</a></li>
-           <li class="li-selected">Dar medicamento 1 12:30</li>
-           <li><a href="ver_tarea.html" style="color: gray;">Dar medicamento 1 12:30</a></li>
-          </ul>
-         </div>
-         <div class="tab-pane" id="notas" role="tabpanel">
-          <div class="tab-pane active" id="tabs-1" role="tabpanel">
-            <ul class="ul-coustome">
-             <li><a href="nota_ver.html" style="color: gray;">Nota 1</a></li>
-             <li><a href="nota_ver.html" style="color: gray;">Nota 2</a></li>
-             <li><a href="nota_ver.html" style="color: gray;">Nota 3</a></li>
-             <li><a href="nota_ver.html" style="color: gray;">Nota 4</a></li>
-            </ul>
-           </div>
-           <div class="form-group">
-             <a href="nota_nueva.html" class="btn btn-primary rounded submit p-3 px-5">CREAR NOTA</a>
-          </div>
-         </div>
+         <div class="tab-pane active" id="tareas" role="tabpanel"></div>
+         <div class="tab-pane" id="notas" role="tabpanel"></div>
+          
         </div>
        </div>
       </div>
@@ -109,4 +91,69 @@
    </div>
   </section>
  </body>
+ <script type="text/javascript">
+  $(document).ready(function () {
+  
+   id_emp = localStorage.getItem("id");
+   $("#salir").click(function (e) {
+     e.preventDefault();
+     url_srv = "http://localhost:8000/api/salir";
+     var formData = {
+      id: id_emp,
+     };
+     $.ajax({
+      type: "POST",
+      url: url_srv,
+      data: formData,
+      dataType: "json",
+      encode: true,
+     }).done(function (data) {
+      if (data.success == true) {
+       localStorage.removeItem("id");
+       window.location.href = "../index.html";
+      }
+     });
+    });
+   url_srv = "http://localhost:8000/api/tareas/" + id_emp;
+   html = '<ul class="ul-coustome">';
+   $.get(url_srv, function (res) {
+    console.log(res);
+    for (i = 0; i <res.length; i++) {
+     html += '<a href="ver_tarea.html?id=' + res[i]["id"] + '" style="color: gray;">';
+     if (res[i]["estado"] == "pendiente") {
+      html += "<li>";
+     } else {
+      html += '<li class="li-selected">';
+     }
+     html += res[i]["detalle_tarea"]["nombre"] + " " + res[i]["detalle_tarea"]["fecha_inicio"];
+     html += "</li>";
+     html += "</a>";
+    }
+    html += "</ul>";
+    $("#tareas").append(html);
+   });
+   url_srv2 = "http://localhost:8000/api/notas/" + id_emp;
+   
+   $.get(url_srv2, function (res) {
+    console.log(res.length,'notass');
+    html = '<ul class="ul-coustome">';
+    for (i = 0; i < res.length; i++) {
+     html += '<a href="nota_ver.html?id=' + res[i]["id"] + '" style="color: gray;">';
+     if (res[i]["estado"] == "urgente") {
+      html += "<li>";
+     } else {
+      html += '<li class="li-selected" style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
+     }
+     html += res[i]["titulo"] + "<br>" + res[i]["fecha"];
+     html += "</li>";
+     html += "</a>";
+    }
+    html += "</ul>";
+    html += '<div class="form-group">'
+    html+='<a href="nota_nueva.html" class="btn btn-primary rounded submit p-3 px-5">CREAR NOTA</a>'
+    html+='</div>'
+    $("#notas").append(html);
+   });
+  });
+ </script>
 </html>

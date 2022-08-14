@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-  <title>Empleada</title>
   <meta charset="utf-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+  <title>Empleada</title>
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="../css/style.css" />
@@ -14,7 +12,6 @@
   <script src="../js/bootstrap.min.js"></script>
   <script src="../js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <style>
    .header {
     padding: 10px;
@@ -64,7 +61,7 @@
   <section class="header">
    <div class="icon d-flex align-items-center justify-content-center">
     <h2>IconApp</h2>
-    <a href="../index.html"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+    <a id="salir"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
    </div>
   </section>
   <section class="ftco-section">
@@ -77,16 +74,16 @@
        </div>
        <div class="form-group row">
         <div class="col-md-1">
-            <a href="tareas_list.html"><i class="fa fa-backward" aria-hidden="true"></i></a>
+         <a href="tareas_list.html"><i class="fa fa-backward" aria-hidden="true"></i></a>
         </div>
         <div class="col-md-11">
-            <h3 class="text-center mb-4">Detalle Nueva</h3>
+         <h3 class="text-center mb-4">Detalle Nueva</h3>
         </div>
        </div>
 
-       <form id="login" class="login-form">
+       <form id="login" class="login-form" method="POST">
         <div class="form-group">
-         <input type="text" id="text" class="form-control rounded-left" placeholder="Titulo" required="" />
+         <input type="text" id="titulo" class="form-control rounded-left" placeholder="Titulo" required="" />
         </div>
         <div class="form-group d-flex">
          <select name="tipo" id="tipo" class="form-control rounded-left">
@@ -111,10 +108,10 @@
         </div>
         <br clear="all" />
         <div class="form-group d-flex">
-         <a href="tareas_list.html" class="btn btn-primary rounded col-md-12">GUARDAR</a>
+         <input type="submit" name="" value="GUARDAR" class="btn btn-primary rounded col-md-12" />
         </div>
         <div class="form-group d-flex">
-         <a onclick="borrar()" class="btn btn-danger rounded col-md-12">BORRAR</a>
+         <a onclick="borrar()" class="btn btn-danger rounded col-md-12" style="color: white;">BORRAR</a>
         </div>
        </form>
       </div>
@@ -123,7 +120,66 @@
    </div>
   </section>
   <script>
+   $(document).ready(function () {
+    id_tarea = window.location.search.split("=")[1];
+    id_emp = localStorage.getItem("id");
+    url_srv = "http://localhost:8000/api/nota/detalle/" + id_tarea;
+    $.get(url_srv, function (res) {
+     $("#titulo").val(res.titulo);
+     $("#descripcion").val(res.descripcion);
+     $("#hora").val(res.hora);
+     $("#fecha").val(res.fecha);
+     $("#tipo").val(res.tipo);
+     console.log("res", res);
+    });
+    $("#salir").click(function (e) {
+     e.preventDefault();
+     url_srv = "http://localhost:8000/api/salir";
+     var formData = {
+      id: id_emp,
+     };
+     $.ajax({
+      type: "POST",
+      url: url_srv,
+      data: formData,
+      dataType: "json",
+      encode: true,
+     }).done(function (data) {
+      if (data.success == true) {
+       localStorage.removeItem("id");
+       window.location.href = "../index.html";
+      }
+     });
+    });
+   });
+
+   $("form").submit(function (event) {
+    url_srv = "http://localhost:8000/api/nota/detalle/" + id_tarea;
+    var formData = {
+     titulo: $("#titulo").val(),
+     tipo: $("#tipo").val(),
+     fecha: $("#fecha").val(),
+     hora: $("#hora").val(),
+     descripcion: $("#descripcion").val(),
+     id_empleada: id_emp,
+    };
+    $.ajax({
+     type: "POST",
+     url: url_srv,
+     data: formData,
+     dataType: "json",
+     encode: true,
+    }).done(function (data) {
+     if (data.success == true) {
+      window.location.href = "tareas_list.html";
+     }
+    });
+    event.preventDefault();
+   });
    function borrar() {
+    //nota/detalle/
+    url_srv = "http://localhost:8000/api/nota/borrar";
+
     Swal.fire({
      title: "Borrar",
      text: "¡No podrás revertir esto!",
@@ -135,8 +191,21 @@
      cancelButtonText: "Cancelar",
     }).then((result) => {
      if (result.isConfirmed) {
+      var formData = {
+       id: id_tarea,
+      };
       Swal.fire("Borrado!", "La nota fue borrada con éxito", "success");
-      window.location.href = "tareas_list.html";
+      $.ajax({
+       type: "POST",
+       url: url_srv,
+       data: formData,
+       dataType: "json",
+       encode: true,
+      }).done(function (data) {
+       if (data.success == true) {
+        window.location.href = "tareas_list.html";
+       }
+      });
      }
     });
    }

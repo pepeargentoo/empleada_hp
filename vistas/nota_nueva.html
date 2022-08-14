@@ -62,7 +62,7 @@
   <section class="header">
    <div class="icon d-flex align-items-center justify-content-center">
     <h2>IconApp</h2>
-    <a href="../index.html"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+    <a id="salir"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
    </div>
   </section>
   <section class="ftco-section">
@@ -73,24 +73,23 @@
        <div class="icon d-flex align-items-center justify-content-center">
         <span class="fa fa-user-o"></span>
        </div>
-       
+
        <div class="form-group row">
         <div class="col-md-1">
-            <a href="tareas_list.html"><i class="fa fa-backward" aria-hidden="true"></i></a>
+         <a href="tareas_list.html"><i class="fa fa-backward" aria-hidden="true"></i></a>
         </div>
         <div class="col-md-11">
-            <h3 class="text-center mb-4">Nota Nueva</h3>
+         <h3 class="text-center mb-4">Nota Nueva</h3>
         </div>
        </div>
 
-
-       <form id="login" class="login-form">
+       <form method="POST" id="form" class="login-form">
         <div class="form-group">
-         <input type="text" id="text" class="form-control rounded-left" placeholder="Titulo" required="" />
+         <input type="text" id="titulo" class="form-control rounded-left" placeholder="Titulo" required="" />
         </div>
         <div class="form-group d-flex">
-         <select name="tipo" id="tipo" class="form-control rounded-left">
-          <option default="">Seleccione uno</option>
+         <select name="tipo" id="tipo" class="form-control rounded-left" required="">
+          <option></option>
           <option value="urgente">Urgente</option>
           <option value="normal">Normal</option>
          </select>
@@ -106,12 +105,12 @@
 
         <div class="form-group d-flex row">
          <div class="col-md-12">
-          <textarea id="descripcion" class="form-control rounded-left" placeholder="Descripcion"></textarea>
+          <textarea id="descripcion" class="form-control rounded-left" placeholder="Descripcion" required></textarea>
          </div>
         </div>
 
         <div class="form-group">
-            <a href="tareas_list.html" class="btn btn-primary rounded submit p-3 px-5">CREAR</a>
+         <input type="submit" value="CREAR" class="btn btn-primary rounded submit p-3 px-5" />
         </div>
        </form>
       </div>
@@ -119,5 +118,57 @@
     </div>
    </div>
   </section>
+  <script type="text/javascript">
+   url_srv = "http://localhost:8000/api/notas";
+   id_emp = localStorage.getItem("id");
+   if (id_emp == null) {
+    window.location.href = "../index.html";
+   }
+
+   $("#salir").click(function (e) {
+     e.preventDefault();
+     url_srv = "http://localhost:8000/api/salir";
+     var formData = {
+      id: id_emp,
+     };
+     $.ajax({
+      type: "POST",
+      url: url_srv,
+      data: formData,
+      dataType: "json",
+      encode: true,
+     }).done(function (data) {
+      if (data.success == true) {
+       localStorage.removeItem("id");
+       window.location.href = "../index.html";
+      }
+     });
+    });
+
+   $("form").submit(function (event) {
+    var formData = {
+     titulo: $("#titulo").val(),
+     tipo: $("#tipo").val(),
+     fecha: $("#fecha").val(),
+     hora: $("#hora").val(),
+     descripcion: $("#descripcion").val(),
+     id_empleada: id_emp,
+    };
+    $.ajax({
+     type: "POST",
+     url: url_srv,
+     data: formData,
+     dataType: "json",
+     encode: true,
+    }).done(function (data) {
+     if (data.success == true) {
+      window.location.href = "tareas_list.html";
+     }
+     console.log(data);
+     console.log("aca");
+    });
+    event.preventDefault();
+   });
+  </script>
  </body>
 </html>

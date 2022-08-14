@@ -62,7 +62,7 @@
   <section class="header">
    <div class="icon d-flex align-items-center justify-content-center">
     <h2>IconApp</h2>
-    <a href="../index.html"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+    <a id="salir"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
    </div>
   </section>
   <section class="ftco-section-costome">
@@ -71,23 +71,113 @@
      <div class="col-md-6 col-lg-5">
       <div class="login-wrap p-4 p-md-5">
        <div class="row">
-        <h4>Medicamento 1</h4>
+        <div id="titulo"></div>
        </div>
        <div class="row">
         <br clear=all>
-        <p>Hora: 10:30</p>
+        <div id="hora"></div>
         </div>
     <div class="row">
         <p >Descipción:</p>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis animi tempore adipisci exercitationem laboriosam dicta veniam. Optio suscipit quasi totam rerum in eos unde? Hic recusandae accusantium odio laudantium omnis?</p>
+        <div id="detalle"></div>
        </div>
-       <div class="form-group">
-        <a href="tareas_list.html" class="btn btn-primary rounded submit p-3 px-5">FINALIZAR</a>
+       <div class="row">
+        <div class="col-md-12">
+        <a href="tareas_list.html" class="btn btn-primary rounded submit p-3 px-5" style="width:100%;margin-bottom: 10px;">ATRAS</a>
+        </div>
+        <br clear="all">
+        <div class="col-md-12">
+        <a id="finalizar" class="btn btn-primary rounded submit p-3 px-5" style="width:100%;">FINALIZAR</a>
+        </div>
      </div>
       </div>
      </div>
     </div>
    </div>
   </section>
+  <script type="text/javascript">
+      $(document).ready(function() {
+        $("#salir").click(function (e) {
+     e.preventDefault();
+     url_srv = "http://localhost:8000/api/salir";
+     var formData = {
+      id: id_emp,
+     };
+     $.ajax({
+      type: "POST",
+      url: url_srv,
+      data: formData,
+      dataType: "json",
+      encode: true,
+     }).done(function (data) {
+      if (data.success == true) {
+       localStorage.removeItem("id");
+       window.location.href = "../index.html";
+      }
+     });
+    });
+        id_tarea = window.location.search.split("=")[1]
+        id_emp=localStorage.getItem('id');
+        url_srv = "http://localhost:8000/api/tareadetalle"
+        var formData = {
+            id: id_emp,
+            id_tarea: id_tarea,
+        };
+        $.ajax({
+          type: "POST",
+          url: url_srv,
+          data: formData,
+          dataType: "json",
+          encode: true,
+         }).done(function (data) {
+            if (data.success !== false) {
+                console.log(data)
+                $('#titulo').empty()
+                html_titulo ='<h4>'+data['detalle_tarea']['nombre']+'</h4>'
+                html_detalle= '<br><p>'+data['detalle_tarea']['descripcion']+'</p>'
+                html_hora='<p>Hora: '+data['detalle_tarea']['hora_inicio']+'</p>'
+                $('#detalle').empty()
+                $('#hora').empty()
+                $('#titulo').append(html_titulo)
+                $('#detalle').append(html_detalle)
+                $('#hora').append(html_hora)
+                if(data.estado == "terminado"){
+                    $('#finalizar').css('display', 'none') 
+                   
+                }
+            }
+         });
+        $('#finalizar').click(function(e){
+            e.preventDefault()
+            url_srv = "http://localhost:8000/api/finalizartarea"
+            $.ajax({
+              type: "POST",
+              url: url_srv,
+              data: formData,
+              dataType: "json",
+              encode: true,
+            }).done(function (data) {
+                console.log(data)
+                if (data.success !== false) {
+                    /*
+                    $('#titulo').empty()
+                    html_titulo ='<h4>'+data['detalle_tarea']['nombre']+'</h4>'
+                    html_detalle= '<br><p>'+data['detalle_tarea']['descripcion']+'</p>'
+                    html_hora='<p>Hora: '+data['detalle_tarea']['hora_inicio']+'</p>'
+                    $('#detalle').empty()
+                    $('#hora').empty()
+                    $('#titulo').append(html_titulo)
+                    $('#detalle').append(html_detalle)
+                    $('#hora').append(html_hora)
+                    */
+                    window.location.href = "tareas_list.html";
+                }
+             });
+            
+
+        })
+        console.log(id_tarea)
+      });
+  </script>
  </body>
 </html>

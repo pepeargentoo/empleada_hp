@@ -1,59 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>Empleada</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/style.css">
-	</head>
-	<body>
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-5">
-					<div class="login-wrap p-4 p-md-5">
-		      	<div class="icon d-flex align-items-center justify-content-center">
-		      		<span class="fa fa-user-o"></span>
-		      	</div>
-		      	<h3 class="text-center mb-4">Login</h3>
-						<form id="login" class="login-form">
-		      		<div class="form-group">
-		      			<input type="text" id="email" class="form-control rounded-left" placeholder="Email" required>
-		      		</div>
-	            <div class="form-group d-flex">
-	              <input type="password" id="password" class="form-control rounded-left" placeholder="Password" required>
-	            </div>
-	            
-	            <div class="form-group">
-	            	<button  type="submit" class="btn btn-primary rounded submit p-3 px-5">INGRESAR</button>
-	            </div>
-	          </form>
-	        </div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<script src="js/jquery.min.js"></script>
-  	<script src="js/popper.js"></script>
+ <head>
+  <title>Empleada</title>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
-	<script>
-		$('#login').submit(function(e){
-			e.preventDefault();
-			console.log($('#email').val())
-			console.log('click')
-			if($('#email').val() == "empleada@empleada.com" &&
-			$('#password').val() == "empleada"){
-				window.location.href = "vistas/qr-ingreso.html";
-				
-			}else{
-				console.log('clave invalida')
-			}
-		})
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" />
+  <script src="js/html5-qrcode.min.js"></script>
+  <style>
+   .header {
+    padding: 10px;
+    background: #8d448b;
+    border: none;
+   }
+   .header h2 {
+    color: white;
+   }
+   .header a {
+    font-size: 30px;
+    font-weight: bold;
 
-	</script>
-	</body>
+    position: absolute;
+    right: 20px;
+   }
+   .header a i {
+    color: white;
+   }
+   .ftco-section-costome {
+    padding: 3em 0;
+   }
+
+   .section-midd {
+    width: 50%;
+    font-weight: bold;
+   }
+
+   .ul-coustome {
+    margin-top: 30px;
+    list-style: none;
+   }
+   .ul-coustome li {
+    border: 1.5px solid gray;
+    margin-left: -28px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+   }
+   .li-selected {
+    background: #8d448b;
+    color: white;
+   }
+  </style>
+ </head>
+ <body>
+  <section class="header">
+   <div class="icon d-flex align-items-center justify-content-center">
+    <h2>IconApp</h2>
+    <a href="../index.html"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+   </div>
+  </section>
+  <section class="ftco-section" style="">
+   <div class="container">
+    <div class="row justify-content-center">
+     <div class="col-md-6 col-lg-5">
+      <div class="login-wrap p-4 p-md-5">
+       <div class="icon d-flex align-items-center justify-content-center">
+        <span class="fa fa-user-o"></span>
+       </div>
+       <h3 class="text-center mb-4">INGRSAR</h3>
+       <div class="col-md-12">
+        <div id="reader"></div>
+        <div id="scanned-result"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script>
+   $(document).ready(function () {
+    url_srv = "http://localhost:8000/api/ingreso";
+
+    var formData = {
+     qr: "A", //cambiar por valor que leer el lector qr
+    };
+    $.ajax({
+     type: "POST",
+     url: url_srv,
+     data: formData,
+     dataType: "json",
+     encode: true,
+    }).done(function (data) {
+     if (data.success !== false) {
+      window.location.href = "vistas/login.html";
+     }
+    });
+
+    function onScanSuccess(decodedText, decodedResult) {
+     console.log("okey ");
+     console.log("decodedText",decodedText);
+     console.log("decodedResult",decodedResult);
+     //window.location.href = "  tareas_list.html";
+    }
+    var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
+   });
+  </script>
+ </body>
 </html>
-
