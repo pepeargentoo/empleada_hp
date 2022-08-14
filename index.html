@@ -88,9 +88,9 @@
   <script>
    $(document).ready(function () {
     url_srv = "http://localhost:8000/api/ingreso";
-
-    var formData = {
-     qr: "A", //cambiar por valor que leer el lector qr
+    function onScanSuccess(decodedText, decodedResult) {
+     var formData = {
+        qr: decodedText, //cambiar por valor que leer el lector qr
     };
     $.ajax({
      type: "POST",
@@ -104,11 +104,6 @@
      }
     });
 
-    function onScanSuccess(decodedText, decodedResult) {
-     console.log("okey ");
-     console.log("decodedText",decodedText);
-     console.log("decodedResult",decodedResult);
-     //window.location.href = "  tareas_list.html";
     }
     var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess);
