@@ -89,6 +89,7 @@
    $(document).ready(function () {
     url_srv = "http://c1531793.ferozo.com/public/api/ingreso";
     function onScanSuccess(decodedText, decodedResult) {
+        console.log('llega aca');
      var formData = {
       qr: decodedText, //cambiar por valor que leer el lector qr
      };
