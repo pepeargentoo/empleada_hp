@@ -97,7 +97,7 @@
    id_emp = localStorage.getItem("id");
    $("#salir").click(function (e) {
      e.preventDefault();
-     url_srv = "http://localhost:8000/api/salir";
+     url_srv = "http://c1531793.ferozo.com/public/api/salir";
      var formData = {
       id: id_emp,
      };
@@ -114,7 +114,7 @@
       }
      });
     });
-   url_srv = "http://localhost:8000/api/tareas/" + id_emp;
+   url_srv = "http://c1531793.ferozo.com/public/api/tareas/" + id_emp;
    html = '<ul class="ul-coustome">';
    $.get(url_srv, function (res) {
     console.log(res);
@@ -132,7 +132,7 @@
     html += "</ul>";
     $("#tareas").append(html);
    });
-   url_srv2 = "http://localhost:8000/api/notas/" + id_emp;
+   url_srv2 = "http://c1531793.ferozo.com/public/api/notas/" + id_emp;
    
    $.get(url_srv2, function (res) {
     console.log(res.length,'notass');

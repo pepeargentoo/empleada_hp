@@ -99,7 +99,7 @@
       $(document).ready(function() {
         $("#salir").click(function (e) {
      e.preventDefault();
-     url_srv = "http://localhost:8000/api/salir";
+     url_srv = "http://c1531793.ferozo.com/public/api/salir";
      var formData = {
       id: id_emp,
      };
@@ -118,7 +118,7 @@
     });
         id_tarea = window.location.search.split("=")[1]
         id_emp=localStorage.getItem('id');
-        url_srv = "http://localhost:8000/api/tareadetalle"
+        url_srv = "http://c1531793.ferozo.com/public/api/tareadetalle"
         var formData = {
             id: id_emp,
             id_tarea: id_tarea,
@@ -143,13 +143,13 @@
                 $('#hora').append(html_hora)
                 if(data.estado == "terminado"){
                     $('#finalizar').css('display', 'none') 
-                   
+
                 }
             }
          });
         $('#finalizar').click(function(e){
             e.preventDefault()
-            url_srv = "http://localhost:8000/api/finalizartarea"
+            url_srv = "http://c1531793.ferozo.com/public/api/finalizartarea"
             $.ajax({
               type: "POST",
               url: url_srv,
@@ -157,19 +157,9 @@
               dataType: "json",
               encode: true,
             }).done(function (data) {
-                console.log(data)
+                
                 if (data.success !== false) {
-                    /*
-                    $('#titulo').empty()
-                    html_titulo ='<h4>'+data['detalle_tarea']['nombre']+'</h4>'
-                    html_detalle= '<br><p>'+data['detalle_tarea']['descripcion']+'</p>'
-                    html_hora='<p>Hora: '+data['detalle_tarea']['hora_inicio']+'</p>'
-                    $('#detalle').empty()
-                    $('#hora').empty()
-                    $('#titulo').append(html_titulo)
-                    $('#detalle').append(html_detalle)
-                    $('#hora').append(html_hora)
-                    */
+                  
                     window.location.href = "tareas_list.html";
                 }
              });

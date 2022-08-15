@@ -123,7 +123,7 @@
    $(document).ready(function () {
     id_tarea = window.location.search.split("=")[1];
     id_emp = localStorage.getItem("id");
-    url_srv = "http://localhost:8000/api/nota/detalle/" + id_tarea;
+    url_srv = "http://c1531793.ferozo.com/public/api/nota/detalle/" + id_tarea;
     $.get(url_srv, function (res) {
      $("#titulo").val(res.titulo);
      $("#descripcion").val(res.descripcion);
@@ -134,7 +134,7 @@
     });
     $("#salir").click(function (e) {
      e.preventDefault();
-     url_srv = "http://localhost:8000/api/salir";
+     url_srv = "http://c1531793.ferozo.com/public/api/salir";
      var formData = {
       id: id_emp,
      };
@@ -154,7 +154,7 @@
    });
 
    $("form").submit(function (event) {
-    url_srv = "http://localhost:8000/api/nota/detalle/" + id_tarea;
+    url_srv = "http://c1531793.ferozo.com/public/api/nota/detalle/" + id_tarea;
     var formData = {
      titulo: $("#titulo").val(),
      tipo: $("#tipo").val(),
@@ -178,7 +178,7 @@
    });
    function borrar() {
     //nota/detalle/
-    url_srv = "http://localhost:8000/api/nota/borrar";
+    url_srv = "http://c1531793.ferozo.com/public/api/nota/borrar";
 
     Swal.fire({
      title: "Borrar",

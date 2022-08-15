@@ -64,7 +64,7 @@
   <section class="header">
    <div class="icon d-flex align-items-center justify-content-center">
     <h2>IconApp</h2>
-    <a href="../index.html"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+   
    </div>
   </section>
   <section class="ftco-section" style="">
@@ -87,23 +87,22 @@
   </section>
   <script>
    $(document).ready(function () {
-    url_srv = "http://localhost:8000/api/ingreso";
+    url_srv = "http://c1531793.ferozo.com/public/api/ingreso";
     function onScanSuccess(decodedText, decodedResult) {
      var formData = {
-        qr: decodedText, //cambiar por valor que leer el lector qr
-    };
-    $.ajax({
-     type: "POST",
-     url: url_srv,
-     data: formData,
-     dataType: "json",
-     encode: true,
-    }).done(function (data) {
-     if (data.success !== false) {
-      window.location.href = "vistas/login.html";
-     }
-    });
-
+      qr: decodedText, //cambiar por valor que leer el lector qr
+     };
+     $.ajax({
+      type: "POST",
+      url: url_srv,
+      data: formData,
+      dataType: "json",
+      encode: true,
+     }).done(function (data) {
+      if (data.success !== false) {
+       window.location.href = "vistas/login.html";
+      }
+     });
     }
     var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess);
