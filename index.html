@@ -90,8 +90,10 @@
     url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/ingreso";
     function onScanSuccess(decodedText, decodedResult) {
         console.log('llega aca');
-        alert('decodedText',decodedText);
-        alert('decodedResult',decodedResult)
+        //alert('decodedText',decodedText);
+        //alert('decodedResult',decodedResult)
+        console.log('decodedText',decodedText)
+        console.log('decodedResult',decodedResult)
      var formData = {
       qr: decodedText, //cambiar por valor que leer el lector qr
      };
