@@ -99,7 +99,7 @@
       $(document).ready(function() {
         $("#salir").click(function (e) {
      e.preventDefault();
-     url_srv = "http://c1531793.ferozo.com/public/api/salir";
+     url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/salir";
      var formData = {
       id: id_emp,
      };
@@ -118,7 +118,7 @@
     });
         id_tarea = window.location.search.split("=")[1]
         id_emp=localStorage.getItem('id');
-        url_srv = "http://c1531793.ferozo.com/public/api/tareadetalle"
+        url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/tareadetalle"
         var formData = {
             id: id_emp,
             id_tarea: id_tarea,
@@ -149,7 +149,7 @@
          });
         $('#finalizar').click(function(e){
             e.preventDefault()
-            url_srv = "http://c1531793.ferozo.com/public/api/finalizartarea"
+            url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/finalizartarea"
             $.ajax({
               type: "POST",
               url: url_srv,

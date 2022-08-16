@@ -119,7 +119,7 @@
    </div>
   </section>
   <script type="text/javascript">
-   url_srv = "http://localhost:8000/api/notas";
+   url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/notas";
    id_emp = localStorage.getItem("id");
    if (id_emp == null) {
     window.location.href = "../index.html";
@@ -127,7 +127,7 @@
 
    $("#salir").click(function (e) {
      e.preventDefault();
-     url_srv = "http://c1531793.ferozo.com/public/api/salir";
+     url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/salir";
      var formData = {
       id: id_emp,
      };
