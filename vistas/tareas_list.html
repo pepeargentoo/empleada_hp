@@ -155,5 +155,13 @@
     $("#notas").append(html);
    });
   });
+  $('#tarea_list').click(function(e){
+    $('#notas').css('display','none');
+    $('#tareas').css('display','block')  
+  })
+  $('#notas_list').click(function(e){
+    $('#notas').css('display','block')
+    $('#tareas').css('display','none');
+  })
  </script>
 </html>
