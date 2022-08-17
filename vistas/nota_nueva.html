@@ -120,14 +120,12 @@
   </section>
   <script type="text/javascript" src="../js/config.js"></script>
   <script type="text/javascript">
-
   if(location.origin == "file://"){
         url = Config.local
     }else{
         url = Config.otherUrl
     }
     url_srv = url+"api/notas"
-   //url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/notas";
    id_emp = localStorage.getItem("id");
    if (id_emp == null) {
     window.location.href = "../index.html";
@@ -136,7 +134,6 @@
    $("#salir").click(function (e) {
      e.preventDefault();
      url_srv = url+"api/salir"
-     //url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/salir";
      var formData = {
       id: id_emp,
      };
@@ -173,8 +170,8 @@
      if (data.success == true) {
       window.location.href = "tareas_list.html";
      }
-     console.log(data);
-     console.log("aca");
+     //console.log(data);
+     //console.log("aca");
     });
     event.preventDefault();
    });

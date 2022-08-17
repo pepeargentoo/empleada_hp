@@ -137,7 +137,7 @@
      encode: true,
     }).done(function (data) {
      if (data.success !== false) {
-      console.log(data);
+      
       $("#titulo").empty();
       html_titulo = "<h4>" + data["detalle_tarea"]["nombre"] + "</h4>";
       html_detalle = "<br><p>" + data["detalle_tarea"]["descripcion"] + "</p>";
@@ -171,3 +171,4 @@
   </script>
  </body>
 </html>
+        

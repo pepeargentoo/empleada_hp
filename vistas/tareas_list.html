@@ -121,7 +121,6 @@
    url_srv = url + "api/tareas/" + id_emp;
    html = '<ul class="ul-coustome">';
    $.get(url_srv, function (res) {
-    console.log(res);
     for (i = 0; i < res.length; i++) {
      html += '<a href="ver_tarea.html?id=' + res[i]["id"] + '" style="color: gray;">';
      if (res[i]["estado"] == "pendiente") {
@@ -139,7 +138,6 @@
    url_srv2 = url + "api/notas/" + id_emp;
 
    $.get(url_srv2, function (res) {
-    console.log(res.length, "notass");
     html = '<ul class="ul-coustome">';
     for (i = 0; i < res.length; i++) {
      html += '<a href="nota_ver.html?id=' + res[i]["id"] + '" style="color: gray;">';
