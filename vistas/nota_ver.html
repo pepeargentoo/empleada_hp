@@ -119,11 +119,23 @@
     </div>
    </div>
   </section>
+  <script type="text/javascript" src="../js/config.js"></script>
   <script>
    $(document).ready(function () {
+
     id_tarea = window.location.search.split("=")[1];
     id_emp = localStorage.getItem("id");
-    url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/nota/detalle/" + id_tarea;
+
+    if(location.origin == "file://"){
+        url = Config.local
+    }else{
+        url = Config.otherUrl
+    }
+
+
+    
+    url_srv = url +"api/nota/detalle/" + id_tarea;
+    
     $.get(url_srv, function (res) {
      $("#titulo").val(res.titulo);
      $("#descripcion").val(res.descripcion);
@@ -134,7 +146,7 @@
     });
     $("#salir").click(function (e) {
      e.preventDefault();
-     url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/salir";
+     url_srv = url+"api/salir";
      var formData = {
       id: id_emp,
      };
@@ -154,7 +166,7 @@
    });
 
    $("form").submit(function (event) {
-    url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/nota/detalle/" + id_tarea;
+    url_srv = url+"api/nota/detalle/" + id_tarea;
     var formData = {
      titulo: $("#titulo").val(),
      tipo: $("#tipo").val(),
@@ -177,7 +189,7 @@
     event.preventDefault();
    });
    function borrar() {
-    url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/nota/borrar";
+    url_srv = url+"api/nota/borrar";
 
     Swal.fire({
      title: "Borrar",

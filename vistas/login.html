@@ -41,8 +41,15 @@
   <script src="../js/popper.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script src="../js/main.js"></script>
+  <script type="text/javascript" src="../js/config.js"></script>
   <script>
-   url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/login";
+   //url_srv = "https://www.creativesoftware.com.ar/sistemahp/public/api/login";
+   if(location.origin == "file://"){
+        url = Config.local
+    }else{
+        url = Config.otherUrl
+    }
+    url_srv = url+"api/login"
    $(document).ready(function () {
     $("#cartel").css("display", "none");
     $("form").submit(function (event) {
