@@ -8,6 +8,7 @@
 
   
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://pepeargentoo.github.io/css/style.css" />
   <script src="https://pepeargentoo.github.io/js/jquery.min.js"></script>
@@ -126,9 +127,9 @@
     for (i = 0; i < res.length; i++) {
      html += '<a href="ver_tarea.html?id=' + res[i]["id"] + '" style="color: gray;">';
      if (res[i]["estado"] == "pendiente") {
-      html += "<li>";
+      html += '<li style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
      } else {
-      html += '<li class="li-selected">';
+      html += '<li class="li-selected" style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
      }
      html += res[i]["detalle_tarea"]["nombre"] + " " + res[i]["detalle_tarea"]["fecha_inicio"];
      html += "</li>";
