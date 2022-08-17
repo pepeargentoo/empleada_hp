@@ -144,7 +144,7 @@
     for (i = 0; i < res.length; i++) {
      html += '<a href="nota_ver.html?id=' + res[i]["id"] + '" style="color: gray;">';
      if (res[i]["estado"] == "urgente") {
-      html += "<li>";
+      html += '<li style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
      } else {
       html += '<li class="li-selected" style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
      }
