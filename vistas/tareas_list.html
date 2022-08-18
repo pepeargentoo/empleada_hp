@@ -102,25 +102,7 @@
     url = Config.otherUrl;
    }
    id_emp = localStorage.getItem("id");
-   $("#salir").click(function (e) {
-    e.preventDefault();
-    url_srv = url + "api/salir";
-    var formData = {
-     id: id_emp,
-    };
-    $.ajax({
-     type: "POST",
-     url: url_srv,
-     data: formData,
-     dataType: "json",
-     encode: true,
-    }).done(function (data) {
-     if (data.success == true) {
-      localStorage.removeItem("id");
-      window.location.href = "login.html";
-     }
-    });
-   });
+   
    url_srv = url + "api/tareas/" + id_emp;
    html = '<ul class="ul-coustome">';
    $.get(url_srv, function (res) {
@@ -137,10 +119,8 @@
     }
     html += "</ul>";
     $("#tareas").append(html);
-   });
-   url_srv2 = url + "api/notas/" + id_emp;
-
-   $.get(url_srv2, function (res) {
+    url_srv2 = url + "api/notas/" + id_emp;
+    $.get(url_srv2, function (res) {
     html = '<ul class="ul-coustome">';
     for (i = 0; i < res.length; i++) {
      html += '<a href="nota_ver.html?id=' + res[i]["id"] + '" style="color: gray;">';
@@ -159,6 +139,10 @@
     html += "</div>";
     $("#notas").append(html);
    });
+   });
+   
+
+   
    location.reload();
    location.reload();
    location.reload();
@@ -171,5 +155,24 @@
    $("#notas").css("display", "block");
    $("#tareas").css("display", "none");
   });
+  $("#salir").click(function (e) {
+    e.preventDefault();
+    url_srv = url + "api/salir";
+    var formData = {
+     id: id_emp,
+    };
+    $.ajax({
+     type: "POST",
+     url: url_srv,
+     data: formData,
+     dataType: "json",
+     encode: true,
+    }).done(function (data) {
+     if (data.success == true) {
+      localStorage.removeItem("id");
+      window.location.href = "login.html";
+     }
+    });
+   });
  </script>
 </html>
