@@ -127,7 +127,7 @@
     for (i = 0; i < res.length; i++) {
      html += '<a href="ver_tarea.html?id=' + res[i]["id"] + '" style="color: gray;">';
      if (res[i]["estado"] == "pendiente") {
-      html += '<li style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
+      html += '<li class="li-selected">';
      } else {
       html += '<li class="li-selected" style="list-style: none;padding: 20px;border-radius: 10px;margin-bottom: 10px;">';
      }

@@ -1,4 +1,4 @@
 var Config = {
     local: 'http://localhost:8000/',
-    otherUrl: 'https://www.creativesoftware.com.ar/sistemahp/public/',
+    otherUrl: 'http://68.183.21.227/',
 };
